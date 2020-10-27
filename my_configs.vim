@@ -1,0 +1,1 @@
+/home/user0/.vim_runtime/my_configs.vim
