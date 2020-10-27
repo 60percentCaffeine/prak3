@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <limits.h> // INT_MAX
+#include "60lib.c"
 
 long unsigned int my_strlen(const char* str)
 {
@@ -54,33 +55,6 @@ int my_strcmp(const char* s1, const char* s2)
 {
     return my_strncmp(s1, s2, my_strlen(s1));
 }
-
-/*
-char* strstr(const char* haystack, const char* needle)
-{
-    const char* needle_ptr = needle;
-    char* ptr;
-
-    while (*haystack && *needle_ptr)
-    {
-        if (*haystack == *needle_ptr)
-            needle_ptr++;
-        else
-        {
-            needle_ptr = needle;
-            ptr = haystack;
-        }
-
-        haystack++;
-    }
-
-    // unless empty string, found it
-    if (*needle_ptr == 0)
-        return haystack;
-
-    return NULL;
-}
-*/
 
 // first occurence of character c
 char* my_strchr(const char* str, int c)
@@ -152,6 +126,7 @@ void search_arr(int arr_len, char **arr, char *needle, int occurences)
 }
 
 // inserts c at the end of *str
+/*
 void insert_char(char **str, int* len, char c)
 {
     (*len)++;
@@ -198,6 +173,7 @@ int read_uint()
 
     return num;
 }
+*/
 
 int main()
 {
@@ -221,14 +197,14 @@ int main()
         char **ptr;
         arr = realloc(arr, sizeof(arr)*(i + 1));
         ptr = arr + i;
-        *ptr = read_string();
+        *ptr = read_string('\n');
     }
 
     printf("This is the inputted array:\n");
     print_str_arr(arr_len, arr);
 
     printf("Needle: ");
-    needle = read_string();
+    needle = read_string('\n');
 
     printf("Occurences: ");
     occurences = read_uint();
