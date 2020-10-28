@@ -102,7 +102,7 @@ void print_str_arr(int len, char **arr)
 
     for (i = 0; i < len; i++)
     {
-        printf("%s\n", (*arr + i));
+        printf("%s\n", *(arr + i));
     }
 }
 
@@ -112,13 +112,18 @@ void search_arr(int arr_len, char **arr, char *needle, int occurences)
 
     for (i = 0; i < arr_len; i++)
     {
-        char *hay = *arr + i;
+        char *hay = arr[i];
         char *ptr = hay;
-        int occurs;
+        int occurs = -1;
 
         // count occurences
-        for (occurs = 0; ((ptr != NULL) && (occurs < occurences)); occurs++)
+        while ((ptr != NULL) && (occurs < occurences))
+        {
+            occurs++;
             ptr = my_strstr(ptr, needle);
+            if (ptr != NULL)
+                ptr++;
+        }
 
         if (occurs >= occurences)
             printf("%d: %s\n", i, hay);
