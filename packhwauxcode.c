@@ -1,6 +1,6 @@
 #include <stdio.h> // printf
 #include <stdlib.h> // dynamic memory
-#include <math.h> // pow
+//#include <math.h> // pow
 
 // throws a memory allocation error
 void memalloc_error()
@@ -181,7 +181,7 @@ void pack_num(const int *nums, int nums_len, char **pack, int *pack_len, char **
                     memalloc_error();
 			}
 
-			*(*pack + *pack_len) *= 2;
+			*(*pack + *pack_len) <<= 1;
 			*(*pack + *pack_len) += (temp < 0);
             pack_taken++;
 			temp <<= 1;
@@ -198,7 +198,7 @@ void pack_num(const int *nums, int nums_len, char **pack, int *pack_len, char **
             // break "digits" into 2 parts
             char left_part = digits >> (7 - aux_free); // first (aux_free) digits
 
-            char right_mask = pow(2, 7 - aux_free) - 1;
+            char right_mask = (1 << (7 - aux_free)) - 1; // 1 <<= 6
             char right_part = digits & right_mask; // last (5 - aux_free) digits
 
             aux_free += 1;
@@ -249,7 +249,7 @@ int read_bin_digits(char** c, char* read, char amt, char* limit)
                 return 0;
         }
 
-        num *= 2;
+        num <<= 1;
         num += read_bin_digit(*c, read);
     }
 

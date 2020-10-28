@@ -55,4 +55,26 @@ int read_uint()
     return num;
 }
 
+void error(char *text, int error_code)
+{
+    printf(text, error_code);
+    exit(error_code);
+}
 
+void error_alloc(int error_code)
+{
+    error("ALLOC FAILED. ERROR CODE %d\n", error_code);
+}
+
+void check_alloc(void *x, int error_code)
+{
+    if (x == NULL)
+        error_alloc(error_code);
+}
+
+// void free_str(void **x, int arr_len) // y not work? :-'(
+void free_str(char **x, int arr_len)
+{
+    for (int i = 0; i < arr_len; i++)
+        free(x[i]);
+}
