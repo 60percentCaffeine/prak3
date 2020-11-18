@@ -10,7 +10,7 @@ void insert_char(char **str, int* len, char c)
 }
 
 // just pass 0/EOF as endc if you want to read the entire string/file
-char *fread_string(FILE *f, char endc)
+char *fread_string(FILE *f, int endc)
 {
     char c = fgetc(f);
     char *str = NULL;
@@ -57,7 +57,7 @@ int read_uint()
 
 void error(char *text, int error_code)
 {
-    printf(text, error_code);
+    fprintf(stderr, text, error_code);
     exit(error_code);
 }
 
@@ -77,4 +77,25 @@ void free_str(char **x, int arr_len)
 {
     for (int i = 0; i < arr_len; i++)
         free(x[i]);
+}
+
+// last error code used by 60lib
+#define LAST_60ERR = 1;
+
+#include <string.h>
+
+char *clone_string(char *s)
+{
+    long size = strlen(s);
+    char *clone = malloc(size*sizeof(char));
+    check_alloc(clone, 1);
+
+    long i;
+
+    for (i = 0; i < size; i++)
+    {
+        clone[i] = s[i];
+    }
+
+    return clone;
 }
