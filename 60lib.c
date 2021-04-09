@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 // inserts c at the end of *str
 void insert_char(char **str, int* len, char c)
@@ -9,8 +10,23 @@ void insert_char(char **str, int* len, char c)
     *(*str + *len - 1) = c;
 }
 
+char *substr(char *src, int start, int end)
+{
+    char *sub = NULL;
+    int len = 0;
+
+    for (int i = start; i < end; i++)
+    {
+        insert_char(&sub, &len, src[i]);
+    }
+
+    insert_char(&sub, &len, 0);
+
+    return sub;
+}
+
 // just pass 0/EOF as endc if you want to read the entire string/file
-char *fread_string(FILE *f, int endc)
+char *fread_string_tail(FILE *f, char endc, char *tail)
 {
     char c = fgetc(f);
     char *str = NULL;
@@ -23,13 +39,52 @@ char *fread_string(FILE *f, int endc)
     }
 
     insert_char(&str, &len, 0);
+    *tail = c;
 
     return str;
+}
+
+char *read_string_tail(char endc, char *tail)
+{
+    return fread_string_tail(stdin, endc, tail);
+}
+
+char *fread_string(FILE *f, char endc)
+{
+    char tail = 0;
+    return fread_string_tail(f, endc, &tail);
 }
 
 char *read_string(char endc)
 {
     return fread_string(stdin, endc);
+}
+
+int string_to_uint(char *s)
+{
+    char c = s[0];
+    int n = 0;
+
+    for (int i = 1; c != 0; i++)
+    {
+        if (c < '0' || c > '9')
+        {
+            fprintf(stderr, "ERROR: Enter a positive integer.\n");
+            return -1;
+        }
+
+        n = n * 10 + (c - '0');
+        c = s[i];
+    }
+
+    return n;
+}
+
+char *my_strdup(const char* s)
+{
+    char *p = malloc(strlen(s) + 1);
+    if (p) strcpy(p, s);
+    return p;
 }
 
 int read_uint()
@@ -55,9 +110,14 @@ int read_uint()
     return num;
 }
 
-void error(char *text, int error_code)
+void print_error(char *text, int error_code)
 {
     fprintf(stderr, text, error_code);
+}
+
+void error(char *text, int error_code)
+{
+    print_error(text, error_code);
     exit(error_code);
 }
 

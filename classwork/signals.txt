@@ -1,0 +1,13 @@
+SIGINT Ctrl+C
+SIGSEGV segfault
+SIGQUIT ctrl+\ coredump
+SIGCHLD child ded
+SIGTERM "nice" termination of proc
+SIGKILL same as SIGTERM but can't be caught/ignored
+SIGSTOP stop for later resumption, can't catch/ign
+SIGTSTP ctrl+Z SIGSTOP but can be caught/ign
+SIGCONT continue
+
+int kill(pid, sig) - sends signal to other process
+int signal(sig, func) - signal behaviour
+int raise(sig) - send signal to self

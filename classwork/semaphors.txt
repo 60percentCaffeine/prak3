@@ -1,0 +1,22 @@
+semaphors have 2 ops (example):
+- decrease value of sem
+- inc
+
+if value == 0 then proc is blocked on dec try cuz it can't perform the op
+if other proc inc to 1 then one of the blocked procs will unblock
+
+semops are atomic
+during a semop no1 can access the sem
+
+ftok() - generate key
+semget() - get arr of sems
+semflag IPC_CREAT | 0666
+semop - op over sem
+
+semctl cmds:
+SETVAL, GETVAL, IPC_RMD (remove arr of sems)
+
+sembuf:
+sembuf.val + sembuf.op > 0
+sembuf.val += sembuf.op
+если нет, то блокировка

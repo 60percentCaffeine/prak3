@@ -1,0 +1,1 @@
+/home/user0/Documents/prak/60lib.c
